@@ -1,5 +1,7 @@
 <?php
 
+require_once 'encryption.php';
+
 // Vault URL and access token endpoint
 $keyVaultURL = decrypt_options(get_option('wp_event_data_collector_azure_vault_url'));
 $tenantID = decrypt_options(get_option('wp_event_data_collector_tenant_id'));

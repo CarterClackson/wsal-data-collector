@@ -28,6 +28,9 @@ function wp_event_data_collector_enqueue_styles() {
 add_action( 'admin_enqueue_scripts', 'wp_event_data_collector_enqueue_styles' );
 
 function wp_event_data_collector_activate() {
+    add_option('encryption_key_exists', false);
+    $keys = get_option('encryption_key_exists');
+    are_key_and_iv_present($keys);
     /*if ((!is_plugin_active('wp-security-audit-log/wp-security-audit-log.php')) || (!is_plugin_active('wp-security-audit-log-premium/wp-security-audit-log.php')) ) {
         // The required plugin is not active, so prevent activation
         deactivate_plugins(plugin_basename(__FILE__)); // Deactivate the current plugin
@@ -38,6 +41,8 @@ function wp_event_data_collector_activate() {
 
 function wp_event_data_collector_deactivate() {
     wp_clear_scheduled_hook('wp_event_data_collector');
+    remove_keys_and_iv();
+    delete_option('encryption_key_exists');
 }
 
 function wp_event_data_collector_uninstall() {
@@ -52,41 +57,6 @@ function wp_event_data_collector_uninstall() {
     delete_option('wp_event_data_collector_azure_key_name');
 }
 
-// Encryption
-function encrypt_data($data, $key, $iv) {
-    $encryptedData = openssl_encrypt($data, 'AES-256-CBC', $key, OPENSSL_RAW_DATA, $iv);
-    return base64_encode($encryptedData);
-}
-
-// Decryption
-function decrypt_data($encryptedData, $key, $iv) {
-    $decodedData = base64_decode($encryptedData);
-    return openssl_decrypt($decodedData, 'AES-256-CBC', $key, OPENSSL_RAW_DATA, $iv);
-}
-
-// Encrypt option on save
-function encrypt_options($new_value, $old_value, $option_name) {
-    $keyFilePath = WP_CONTENT_DIR . '/encryption-key.txt';
-    $ivFilePath = WP_CONTENT_DIR . '/encryption-iv.txt';
-    $key = hex2bin(file_get_contents($keyFilePath));
-    $iv = hex2bin(file_get_contents($ivFilePath));
-
-    // Encrypt the option value
-    $encrypted_value = encrypt_data($new_value, $key, $iv);
-    return $encrypted_value;
-}
-
-// Decrypt and use
-function decrypt_options($option) {
-    $keyFilePath = WP_CONTENT_DIR . '/encryption-key.txt';
-    $ivFilePath = WP_CONTENT_DIR . '/encryption-iv.txt';
-    $key = hex2bin(file_get_contents($keyFilePath));
-    $iv = hex2bin(file_get_contents($ivFilePath));
-
-    // Decrypt the option value
-    $option = decrypt_data($option, $key, $iv);
-    return $option;
-}
 
 add_filter('cron_schedules', 'add_cron_interval' );
 function add_cron_interval( $schedules ) {
