@@ -18,6 +18,7 @@ function push_file_data_to_api() {
     $workspace_ID = decrypt_options(get_option('wp_event_data_collector_workspace_id'));
     $option = get_option('wp_event_data_collector_identity_dropdown');
     $table_name = decrypt_options(get_option('wp_event_data_collector_table_name'));
+    $custom_email = decrypt_options(get_option('wp_event_data_collector_email'));
 
     if ($option == 'hardcode') {
         $primary_key = decrypt_options(get_option('wp_event_data_collector_primary_key')); //Stored value
@@ -57,7 +58,7 @@ function push_file_data_to_api() {
     // Build the headers
     $header = [
         'Content-Type: application/json',
-        'Log-Type: ' $table_name,
+        'Log-Type: ' . $table_name,
         'x-ms-date: ' . $date,
         'time-generated-field: date',
         'Authorization: ' . generateAuthorizationHeader($workspace_ID, $primary_key, $date, $auth_path, strlen($jsonPayload)),
@@ -91,8 +92,13 @@ function push_file_data_to_api() {
             return;
         }
         // If email hasn't been sent for this set of errors, send it to admin.
+        // If $custom_email is set, use that instead of admin.
         $admin_email = get_option('admin_email');
-        $to = $admin_email;
+        if ($custom_email) {
+            $to = $custom_email;
+        } else {
+            $to = $admin_email;
+        }
         $subject = 'LAW Data Transfer Failed';
         $message = 'Failed to send data. Status code: ' . $httpCode . '. Message:  ' . $response . '</br>Please check your config.';
         $header = array('Content-Type: text/html; charset=UTF-8');

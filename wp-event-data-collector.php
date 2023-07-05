@@ -76,6 +76,7 @@ if (!wp_next_scheduled('wp_event_data_collector')) {
 add_filter('pre_update_option_wp_event_data_collector_primary_key', 'encrypt_options', 10, 3);
 add_filter('pre_update_option_wp_event_data_collector_workspace_id', 'encrypt_options', 10, 3);
 add_filter('pre_update_option_wp_event_data_collector_table_name', 'encrypt_options', 10, 3);
+add_filter('pre_update_option_wp_event_data_collector_email', 'encrypt_options', 10, 3);
 add_filter('pre_update_option_wp_event_data_collector_azure_client_id', 'encrypt_options', 10, 3);
 add_filter('pre_update_option_wp_event_data_collector_azure_client_secret', 'encrypt_options', 10, 3);
 add_filter('pre_update_option_wp_event_data_collector_azure_tenant_id', 'encrypt_options', 10, 3);
@@ -86,6 +87,7 @@ add_filter('pre_update_option_wp_event_data_collector_azure_key_name', 'encrypt_
 add_filter('pre_get_option_wp_event_data_collector_primary_key', 'decrypt_options');
 add_filter('pre_get_option_wp_event_data_collector_workspace_id', 'decrypt_options');
 add_filter('pre_get_option_wp_event_data_collector_table_name', 'decrypt_options');
+add_filter('pre_get_option_wp_event_data_collector_email', 'decrypt_options');
 add_filter('pre_get_option_wp_event_data_collector_azure_client_id', 'decrypt_options');
 add_filter('pre_get_option_wp_event_data_collector_azure_client_secret', 'decrypt_options');
 add_filter('pre_get_option_wp_event_data_collector_azure_tenant_id', 'decrypt_options');
