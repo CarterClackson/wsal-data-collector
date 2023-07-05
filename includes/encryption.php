@@ -108,11 +108,13 @@ function encrypt_options($new_value, $old_value, $option_name) {
     $key_start = strpos($config_content, "define( 'ENCRYPTION_KEY', '") + strlen("define( 'ENCRYPTION_KEY', '");
     $key_end = strpos($config_content, "'", $key_start);
     $key = substr($config_content, $key_start, $key_end - $key_start);
+    $key = hex2bin($key);
 
     // Get the encryption IV from wp-config.php
     $iv_start = strpos($config_content, "define( 'ENCRYPTION_IV', '") + strlen("define( 'ENCRYPTION_IV', '");
     $iv_end = strpos($config_content, "'", $iv_start);
     $iv = substr($config_content, $iv_start, $iv_end - $iv_start);
+    $iv = hex2bin($iv);
 
     // Encrypt the option value
     $encrypted_value = encrypt_data($new_value, $key, $iv);
@@ -128,11 +130,13 @@ function decrypt_options($option) {
     $key_start = strpos($config_content, "define( 'ENCRYPTION_KEY', '") + strlen("define( 'ENCRYPTION_KEY', '");
     $key_end = strpos($config_content, "'", $key_start);
     $key = substr($config_content, $key_start, $key_end - $key_start);
+    $key = hex2bin($key);
 
     // Get the encryption IV from wp-config.php
     $iv_start = strpos($config_content, "define( 'ENCRYPTION_IV', '") + strlen("define( 'ENCRYPTION_IV', '");
     $iv_end = strpos($config_content, "'", $iv_start);
     $iv = substr($config_content, $iv_start, $iv_end - $iv_start);
+    $iv = hex2bin($iv);
 
     // Decrypt the option value
     $option = decrypt_data($option, $key, $iv);
