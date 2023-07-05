@@ -103,19 +103,3 @@ function push_file_data_to_api() {
 
     return true;
 }
-
-// Additional cron interval
-add_filter('cron_schedules', 'add_cron_interval' );
-function add_cron_interval( $schedules ) {
-    $schedules['ten minutes'] = array(
-        'interval' => 600, //Time in seconds
-        'display' => 'Every Ten Minutes'
-    );
-    return $schedules;
-}
-
-// Schedule cron to push
-add_action('wp_event_data_collector', 'push_file_data_to_api');
-if (!wp_next_scheduled('wp_event_data_collector')) {
-    wp_schedule_event(time(), 'ten_minutes', 'wp_event_data_collector');
-}

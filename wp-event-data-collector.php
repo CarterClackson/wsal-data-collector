@@ -28,11 +28,11 @@ function wp_event_data_collector_enqueue_styles() {
 add_action( 'admin_enqueue_scripts', 'wp_event_data_collector_enqueue_styles' );
 
 function wp_event_data_collector_activate() {
-    if ((!is_plugin_active('wp-security-audit-log/wp-security-audit-log.php')) || (!is_plugin_active('wp-security-audit-log-premium/wp-security-audit-log.php')) ) {
+    /*if ((!is_plugin_active('wp-security-audit-log/wp-security-audit-log.php')) || (!is_plugin_active('wp-security-audit-log-premium/wp-security-audit-log.php')) ) {
         // The required plugin is not active, so prevent activation
         deactivate_plugins(plugin_basename(__FILE__)); // Deactivate the current plugin
         wp_die('Error: The required plugin "WP Activity Log" is not active. This plugin cannot be activated. Please install and activate "WP Activity Log" before activated this one.');
-    }
+    } */
     add_option('email_sent_flag', false); // Initialize email sent value and store in option.
 }
 
