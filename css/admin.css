@@ -7,3 +7,23 @@
     color: #888888;
     font-style: italic;
 }
+#general-settings, #identity-settings, #notification-settings {
+    margin-top: 30px;
+}
+#general-settings tbody, #identity-settings tbody, #notification-settings tbody {
+}
+#general-settings tr, #identity-settings tr, #notification-settings tr {
+    padding: 0px 10px 0px 0px;
+}
+#general-settings td, #identity-settings td, #notification-settings td {
+    padding: 5px 10px;
+}
+#general-settings th, #identity-settings th, #notification-settings th {
+    padding: 10px 10px 10px 0px;
+}
+#general-settings span, #identity-settings span, #notification-settings span {
+    padding-bottom: 10px;
+}
+#general-test, #akv-test, #notification-test {
+    margin-top: 10px !important;
+}

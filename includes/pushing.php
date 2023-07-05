@@ -1,9 +1,22 @@
 <?php
 
+require_once ABSPATH . WPINC . '/pluggable.php';
+
 $option = get_option('wp_event_data_collector_identity_dropdown');
 
 if ($option = 'akv') {
     require_once 'auth.php';
+}
+
+//Generate shared key auth signature
+function generateAuthorizationHeader($workspace_ID, $sharedKey, $date, $contentLength) {
+        $stringToSign = "POST\n" . $contentLength . "\napplication/json\nx-ms-date:" . $date . "\n/api/logs";
+        $stringToSign = mb_convert_encoding($stringToSign, 'UTF-8');
+        $sharedKeyBytes = base64_encode($sharedKey);
+        $signature = hash_hmac('sha256', $stringToSign, $sharedKeyBytes, true);
+        $encodedSignature = base64_encode($signature);
+        $authorizationHeader = "SharedKey " . $workspace_ID . ":" . $encodedSignature;
+        return $authorizationHeader;
 }
 
 //Push data to MS Data Collector API
@@ -40,17 +53,6 @@ function push_file_data_to_api() {
         $payload = $file_data;
     }
     $jsonPayload = json_encode($payload);
-
-    //Generate shared key auth signature
-    function generateAuthorizationHeader($workspace_ID, $sharedKey, $date, $auth_path, $contentLength) {
-        $stringToSign = "POST\n" . $contentLength . "\napplication/json\nx-ms-date:" . $date . "\n/api/logs";
-        $stringToSign = mb_convert_encoding($stringToSign, 'UTF-8');
-        $sharedKeyBytes = base64_encode($sharedKey);
-        $signature = hash_hmac('sha256', $stringToSign, $sharedKeyBytes, true);
-        $encodedSignature = base64_encode($signature);
-        $authorizationHeader = "SharedKey " . $workspace_ID . ":" . $encodedSignature;
-        return $authorizationHeader;
-    }
 
     // Get current UTC time in RFC1123 Formatting
     $date = gmdate('D, d M Y H:i:s T');
@@ -103,7 +105,7 @@ function push_file_data_to_api() {
         $message = 'Failed to send data. Status code: ' . $httpCode . '. Message:  ' . $response . '</br>Please check your config.';
         $header = array('Content-Type: text/html; charset=UTF-8');
 
-        wp_mail($to, $subject, $message, $headers);
+        wp_mail($to, $subject, $message, $header);
     }
 
     curl_close($ch);

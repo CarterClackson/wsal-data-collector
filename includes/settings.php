@@ -3,108 +3,120 @@
 function wp_event_data_collector_register_settings() {
     add_settings_section(
         'wp_event_data_collector_general',
-        'Azure Data Collector API Settings',
+        'General Settings',
         'wp_event_data_collector_general_section_callback',
-        'wp_event_data_collector_settings'
+        'wp_event_data_collector_settings_general'
     );
     add_settings_field(
         'wp_event_data_collector_identity_dropdown',
         'Do you want to enter in your primary key or connect to Azure Key Vault?',
         'wp_event_data_collector_identity_dropdown_field_callback',
-        'wp_event_data_collector_settings',
+        'wp_event_data_collector_settings_general',
         'wp_event_data_collector_general'
     );
     add_settings_field(
         'wp_event_data_collector_workspace_id',
         'Workspace ID',
         'wp_event_data_collector_workspace_id_field_callback',
-        'wp_event_data_collector_settings',
+        'wp_event_data_collector_settings_general',
         'wp_event_data_collector_general'
     );
     add_settings_field(
         'wp_event_data_collector_primary_key',
         'Primary Key',
         'wp_event_data_collector_primary_key_field_callback',
-        'wp_event_data_collector_settings',
+        'wp_event_data_collector_settings_general',
         'wp_event_data_collector_general'
     );
     add_settings_field(
         'wp_event_data_collector_table_name',
         'Table Name',
         'wp_event_data_collector_table_name_field_callback',
-        'wp_event_data_collector_settings',
-        'wp_event_data_collector_general'
-    );
-    add_settings_field(
-        'wp_event_data_collector_email',
-        'Custom Notification Email',
-        'wp_event_data_collector_email_field_callback',
-        'wp_event_data_collector_settings',
+        'wp_event_data_collector_settings_general',
         'wp_event_data_collector_general'
     );
     add_settings_section(
         'wp_event_data_collector_identity',
         'Azure Key Vault Settings',
         'wp_event_data_collector_identity_section_callback',
-        'wp_event_data_collector_settings',
+        'wp_event_data_collector_settings_identity',
         'identity-settings'
     );
     add_settings_field(
         'wp_event_data_collector_azure_client_id',
         'Azure Client ID',
         'wp_event_data_collector_azure_client_id_callback',
-        'wp_event_data_collector_settings',
+        'wp_event_data_collector_settings_identity',
         'wp_event_data_collector_identity'
     );
     add_settings_field(
         'wp_event_data_collector_azure_client_secret',
         'Azure Client Secret',
         'wp_event_data_collector_azure_client_secret_callback',
-        'wp_event_data_collector_settings',
+        'wp_event_data_collector_settings_identity',
         'wp_event_data_collector_identity'
     );
     add_settings_field(
         'wp_event_data_collector_azure_tenant_id',
         'Azure Tenant ID',
         'wp_event_data_collector_azure_tenant_id_callback',
-        'wp_event_data_collector_settings',
+        'wp_event_data_collector_settings_identity',
         'wp_event_data_collector_identity'
     );
     add_settings_field(
         'wp_event_data_collector_azure_vault_url',
         'Azure Vault URL',
         'wp_event_data_collector_azure_vault_url_callback',
-        'wp_event_data_collector_settings',
+        'wp_event_data_collector_settings_identity',
         'wp_event_data_collector_identity'
     );
     add_settings_field(
         'wp_event_data_collector_azure_key_name',
         'Azure Key Name',
         'wp_event_data_collector_azure_key_name_callback',
-        'wp_event_data_collector_settings',
+        'wp_event_data_collector_settings_identity',
         'wp_event_data_collector_identity'
+    );
+    add_settings_section(
+        'wp_event_data_collector_notification',
+        'Notification Settings',
+        'wp_event_data_collector_notification_section_callback',
+        'wp_event_data_collector_settings_notification',
+        'notification-settings'
+    );
+    add_settings_field(
+        'wp_event_data_collector_email',
+        'Custom Notification Email',
+        'wp_event_data_collector_email_field_callback',
+        'wp_event_data_collector_settings_notification',
+        'wp_event_data_collector_notification'
     );
     register_setting('wp_event_data_collector_options', 'wp_event_data_collector_identity_dropdown');
     register_setting('wp_event_data_collector_options', 'wp_event_data_collector_workspace_id');
     register_setting('wp_event_data_collector_options', 'wp_event_data_collector_primary_key');
     register_setting('wp_event_data_collector_options', 'wp_event_data_collector_table_name');
-    register_setting('wp_event_data_collector_options', 'wp_event_data_collector_email');
     register_setting('wp_event_data_collector_options', 'wp_event_data_collector_azure_client_id');
     register_setting('wp_event_data_collector_options', 'wp_event_data_collector_azure_client_secret');
     register_setting('wp_event_data_collector_options', 'wp_event_data_collector_azure_tenant_id');
     register_setting('wp_event_data_collector_options', 'wp_event_data_collector_azure_vault_url');
     register_setting('wp_event_data_collector_options', 'wp_event_data_collector_azure_key_name');
+    register_setting('wp_event_data_collector_options', 'wp_event_data_collector_email');
 }
 add_action('admin_init', 'wp_event_data_collector_register_settings');
 
 //Callback for general settings section
 function wp_event_data_collector_general_section_callback() {
-    echo '<p>If you wish to hardcode your values for Workspace ID and Primary Key please do so here. </br> If you would like to use a key stored in Azure Key Vault, select "Azure Key Vault" in the dropdown and fill out the fields.</p></br><span style="color: red; font-size: 18px;">Please be aware that changing the value of the dropdown will wipe prior configurations.</span>';
+    
 }
 //Callback for identity settings section
 function wp_event_data_collector_identity_section_callback($args) {
     $class = isset($args['class']) ? $args['class'] : '';
     echo '<p class="' . esc_attr($class) . '">Configure your Azure Identity settings here</p>';
+}
+//Callback for identity settings section
+function wp_event_data_collector_notification_section_callback($args) {
+    $class = isset($args['class']) ? $args['class'] : '';
+    echo '<p class="' . esc_attr($class) . '">Configure your notification settings here</p>';
 }
 //Call back for Workspace ID Field
 function wp_event_data_collector_workspace_id_field_callback() {

@@ -12,6 +12,8 @@ require_once plugin_dir_path(__FILE__) . 'includes/settings.php';
 require_once plugin_dir_path(__FILE__) . 'includes/logging.php';
 require_once plugin_dir_path(__FILE__) . 'includes/pushing.php';
 require_once plugin_dir_path(__FILE__) . 'includes/encryption.php';
+require_once plugin_dir_path(__FILE__) . 'tests/test-push.php';
+require_once plugin_dir_path(__FILE__) . 'tests/test-notification.php';
 
 register_activation_hook(__FILE__, 'wp_event_data_collector_activate');
 register_deactivation_hook(__FILE__, 'wp_event_data_collector_deactivate');
@@ -31,11 +33,11 @@ function wp_event_data_collector_activate() {
     add_option('encryption_key_exists', false);
     $keys = get_option('encryption_key_exists');
     are_key_and_iv_present($keys);
-    /*if ((!is_plugin_active('wp-security-audit-log/wp-security-audit-log.php')) || (!is_plugin_active('wp-security-audit-log-premium/wp-security-audit-log.php')) ) {
+    if ((!is_plugin_active('wp-security-audit-log/wp-security-audit-log.php')) && (!is_plugin_active('wp-security-audit-log-premium/wp-security-audit-log.php')) ) {
         // The required plugin is not active, so prevent activation
         deactivate_plugins(plugin_basename(__FILE__)); // Deactivate the current plugin
-        wp_die('Error: The required plugin "WP Activity Log" is not active. This plugin cannot be activated. Please install and activate "WP Activity Log" before activated this one.');
-    } */
+        wp_die('Error: The required plugin "WP Activity Log" is not active. This plugin cannot be activated. Please install and activate "WP Activity Log" before activating this one.');
+    } 
     add_option('email_sent_flag', false); // Initialize email sent value and store in option.
 }
 
