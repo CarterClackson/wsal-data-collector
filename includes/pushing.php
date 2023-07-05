@@ -25,7 +25,7 @@ function push_file_data_to_api() {
         $primary_key = $key->value; // AKV
     }
 
-    $api_endpoint = 'https://' . $workspace_ID . '.ods.opinsights.azure.com/api/logs?api-version=2016-04-01&table=' . $table_name;
+    $api_endpoint = 'https://' . $workspace_ID . '.ods.opinsights.azure.com/api/logs?api-version=2016-04-01';
 
     //Read existing file data
     $file_data = [];
@@ -57,8 +57,9 @@ function push_file_data_to_api() {
     // Build the headers
     $header = [
         'Content-Type: application/json',
-        'Log-Type: SampleData',
+        'Log-Type: ' $table_name,
         'x-ms-date: ' . $date,
+        'time-generated-field: date',
         'Authorization: ' . generateAuthorizationHeader($workspace_ID, $primary_key, $date, $auth_path, strlen($jsonPayload)),
     ];
 
