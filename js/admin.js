@@ -1,5 +1,6 @@
 jQuery(document).ready(function($) {
     //Obfuscation
+    /* This is changing the value and not letting the functions work.
     $('.obfuscated-input').each(function() {
         var originalValue = $(this).val();
         var obfuscatedValue = obfuscate(originalValue);
@@ -11,7 +12,7 @@ jQuery(document).ready(function($) {
     });
     $('.obfuscated-input').on('copy', function(event) {
         event.preventDefault();
-    });
+    });*/
 
     // Function to show/hide fields based on the selected option
     function toggleFields() {

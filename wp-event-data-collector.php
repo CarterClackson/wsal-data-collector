@@ -45,6 +45,7 @@ function wp_event_data_collector_deactivate() {
     wp_clear_scheduled_hook('wp_event_data_collector');
     remove_keys_and_iv();
     delete_option('encryption_key_exists');
+    delete_option('email_sent_flag');
 }
 
 function wp_event_data_collector_uninstall() {
@@ -71,7 +72,7 @@ function add_cron_interval( $schedules ) {
 
 add_action('wp_event_data_collector', 'push_file_data_to_api');
 if (!wp_next_scheduled('wp_event_data_collector')) {
-    wp_schedule_event(time(), 'ten_minutes', 'wp_event_data_collector');
+    wp_schedule_event((time() + 600), 'ten_minutes', 'wp_event_data_collector');
 }
 
 // Filters to encrypt each option before pushing to the DB.

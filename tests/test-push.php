@@ -48,6 +48,16 @@ function test_push() {
 
     $jsonPayload = $test_data;
 
+    //Generate shared key auth signature
+    function generateAuthorizationHeaderTester($workspace_ID, $sharedKey, $date, $contentLength) {
+        $stringToSign = "POST\n" . $contentLength . "\napplication/json\nx-ms-date:" . $date . "\n/api/logs";
+        $stringToSign = mb_convert_encoding($stringToSign, 'UTF-8');
+        $sharedKeyBytes = base64_encode($sharedKey);
+        $signature = hash_hmac('sha256', $stringToSign, $sharedKeyBytes, true);
+        $encodedSignature = base64_encode($signature);
+        $authorizationHeader = "SharedKey " . $workspace_ID . ":" . $encodedSignature;
+        return $authorizationHeader;
+    }
 
     // Get current UTC time in RFC1123 Formatting
     $date = gmdate('D, d M Y H:i:s T');
@@ -58,7 +68,7 @@ function test_push() {
         'Log-Type: ' . $table_name,
         'x-ms-date: ' . $date,
         'time-generated-field: date',
-        'Authorization: ' . generateAuthorizationHeader($workspace_ID, $primary_key, $date, strlen($jsonPayload)),
+        'Authorization: ' . generateAuthorizationHeaderTester($workspace_ID, $primary_key, $date, strlen($jsonPayload)),
     ];
 
     //Init cURL
@@ -75,10 +85,10 @@ function test_push() {
     $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
     if ($httpCode == 200) {
-        echo 'Data transfer successful.';
+        $success_message = 'Test push was successful.';
         $response = array (
             'status' => 'success',
-            'message' => 'Data transfer successful.'
+            'message' => $success_message
         );
     } else {
         $error_message = 'Failed to send data. Status code: ' . $httpCode . '. Message: ' . $response;

@@ -79,17 +79,15 @@ function push_file_data_to_api() {
     $response = curl_exec($ch);
     $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
-    $email_sent = get_option('email_sent_flag');
-
     if ($httpCode == 200) {
         echo 'Data transfer successful.';
         file_put_contents($error_path, 'Data sent successfully!');
         file_put_contents($file_path, '[]'); // Only dump the file if transfer was success.
-        update_option('email_sent_flag', true);
+        update_option('email_sent_flag', false);
     } else {
         file_put_contents($error_path, 'Failed to send data. Status code: ' . $httpCode . '. Message:  ' . $response);
         echo 'Failed to send data. Status code: ' . $httpCode . '. Message:  ' . $response;
-
+        $email_sent = get_option('email_sent_flag');
         if ($email_sent) { //If email already sent, return.
             return;
         }
@@ -106,6 +104,7 @@ function push_file_data_to_api() {
         $header = array('Content-Type: text/html; charset=UTF-8');
 
         wp_mail($to, $subject, $message, $header);
+        update_option('email_sent_flag', true);
     }
 
     curl_close($ch);
