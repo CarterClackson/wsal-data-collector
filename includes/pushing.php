@@ -31,7 +31,7 @@ function push_file_data_to_api() {
     $workspace_ID = decrypt_options(get_option('wp_event_data_collector_workspace_id'));
     $option = get_option('wp_event_data_collector_identity_dropdown');
     $table_name = decrypt_options(get_option('wp_event_data_collector_table_name'));
-    $custom_email = decrypt_options(get_option('wp_event_data_collector_email'));
+    $custom_email = trim(decrypt_options(get_option('wp_event_data_collector_email')));
 
     if ($option == 'hardcode') {
         $primary_key = decrypt_options(get_option('wp_event_data_collector_primary_key')); //Stored value
@@ -88,7 +88,7 @@ function push_file_data_to_api() {
         file_put_contents($error_path, 'Failed to send data. Status code: ' . $httpCode . '. Message:  ' . $response);
         echo 'Failed to send data. Status code: ' . $httpCode . '. Message:  ' . $response;
         $email_sent = get_option('email_sent_flag');
-        if ($email_sent) { //If email already sent, return.
+        if ($email_sent == 'setflag') { //If email already sent, return.
             return;
         }
         // If email hasn't been sent for this set of errors, send it to admin.
@@ -104,7 +104,7 @@ function push_file_data_to_api() {
         $header = array('Content-Type: text/html; charset=UTF-8');
 
         wp_mail($to, $subject, $message, $header);
-        update_option('email_sent_flag', true);
+        update_option('email_sent_flag', 'setflag');
     }
 
     curl_close($ch);
