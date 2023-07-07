@@ -39,6 +39,7 @@ function wp_event_data_collector_activate() {
         wp_die('Error: The required plugin "WP Activity Log" is not active. This plugin cannot be activated. Please install and activate "WP Activity Log" before activating this one.');
     } 
     add_option('email_sent_flag', false); // Initialize email sent value and store in option.
+    add_option('wp_event_collector_last_success', 'No successful transmission');
 }
 
 function wp_event_data_collector_deactivate() {
@@ -46,6 +47,7 @@ function wp_event_data_collector_deactivate() {
     remove_keys_and_iv();
     delete_option('encryption_key_exists');
     delete_option('email_sent_flag');
+    delete_option('wp_event_collector_last_success');
 }
 
 function wp_event_data_collector_uninstall() {

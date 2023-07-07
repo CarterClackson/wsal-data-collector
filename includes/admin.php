@@ -17,6 +17,11 @@ function wp_event_data_collector_render_settings_page() {
     <div class="wrap">
     <h1>Event Collector Settings</h1>
     <p>If you wish to hardcode your values for Workspace ID and Primary Key please do so here. </br> If you would like to use a key stored in Azure Key Vault, select "Azure Key Vault" in the dropdown and fill out the fields.<br> <span style="color: red">You must scroll down and click save before running any of the tests.</span></p>
+    <?php 
+            $lastSuccess = get_option('wp_event_collector_last_success');
+            $statusClass = ($lastSuccess === 'No successful transmission') ? 'red' : 'green';
+    ?>
+    <span class="last-success">Last successful push: <span class="<?php echo $statusClass; ?>"><?php echo get_option('wp_event_collector_last_success'); ?></span></span>
     <form method="post" action="options.php">
         <?php
         settings_fields('wp_event_data_collector_options');
@@ -47,7 +52,7 @@ function wp_event_data_collector_render_settings_page() {
             <input type="button" id="notification-test" class="button" value="Test Notifications">
             <div id="notification-response"></div>
         </div>
-        <?php submit_button('Save Settings'); ?>        
+        <?php submit_button('Save Settings'); ?>
     </form>
     </div>
     <?php

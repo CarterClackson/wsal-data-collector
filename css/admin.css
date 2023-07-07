@@ -27,3 +27,14 @@
 #general-test, #akv-test, #notification-test {
     margin-top: 10px !important;
 }
+
+.last-success {
+    font-size: 1.15em;
+    font-weight: bold;
+}
+.last-success .red {
+    color: red;
+}
+.last-success .green {
+    color: green;
+}

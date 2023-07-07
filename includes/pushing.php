@@ -1,9 +1,13 @@
 <?php
 
 require_once ABSPATH . WPINC . '/pluggable.php';
+require_once 'auth.php';
 
 $option = get_option('wp_event_data_collector_identity_dropdown');
 
+if ($option == 'akv') {
+    require_once 'auth.php';
+}
 
 //Generate shared key auth signature
 function generateAuthorizationHeader($workspace_ID, $sharedKey, $date, $contentLength) {
@@ -29,13 +33,7 @@ function push_file_data_to_api() {
     $option = get_option('wp_event_data_collector_identity_dropdown');
     $table_name = decrypt_options(get_option('wp_event_data_collector_table_name'));
     $custom_email = trim(decrypt_options(get_option('wp_event_data_collector_email')));
-
-    if ($option == 'hardcode') {
-        $primary_key = decrypt_options(get_option('wp_event_data_collector_primary_key')); //Stored value
-    } else {
-        $key = require_once 'auth.php';
-        $primary_key = $key; // AKV
-    }
+    $primary_key = decrypt_options(get_option('wp_event_data_collector_primary_key'));
 
     $api_endpoint = 'https://' . $workspace_ID . '.ods.opinsights.azure.com/api/logs?api-version=2016-04-01';
 
@@ -82,6 +80,7 @@ function push_file_data_to_api() {
         file_put_contents($error_path, 'Data sent successfully!');
         file_put_contents($file_path, '[]'); // Only dump the file if transfer was success.
         update_option('email_sent_flag', false);
+        update_option('wp_event_collector_last_success', current_time('mysql') . ' UTC' . wp_timezone_string());
     } else {
         file_put_contents($error_path, 'Failed to send data. Status code: ' . $httpCode . '. Message:  ' . $response);
         echo 'Failed to send data. Status code: ' . $httpCode . '. Message:  ' . $response;

@@ -64,5 +64,6 @@ if ($option == 'akv' && $clientID != NULL && $clientSecret != NULL && $keyName !
 
     $key = json_decode($response);
     $key = $key->value;
-    return $key;
+    $encrypted_key = encrypt_options($key, decrypt_options('wp_event_data_collector_primary_key'), 'wp_event_data_collector_primary_key');
+    update_option('wp_event_data_collector_primary_key', $encrypted_key);
 }
