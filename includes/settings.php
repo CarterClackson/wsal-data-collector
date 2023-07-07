@@ -72,7 +72,7 @@ function wp_event_data_collector_register_settings() {
     );
     add_settings_field(
         'wp_event_data_collector_azure_key_name',
-        'Azure Key Name',
+        'Azure Secret Name',
         'wp_event_data_collector_azure_key_name_callback',
         'wp_event_data_collector_settings_identity',
         'wp_event_data_collector_identity'

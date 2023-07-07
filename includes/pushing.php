@@ -4,9 +4,6 @@ require_once ABSPATH . WPINC . '/pluggable.php';
 
 $option = get_option('wp_event_data_collector_identity_dropdown');
 
-if ($option = 'akv') {
-    require_once 'auth.php';
-}
 
 //Generate shared key auth signature
 function generateAuthorizationHeader($workspace_ID, $sharedKey, $date, $contentLength) {
@@ -36,7 +33,8 @@ function push_file_data_to_api() {
     if ($option == 'hardcode') {
         $primary_key = decrypt_options(get_option('wp_event_data_collector_primary_key')); //Stored value
     } else {
-        $primary_key = $key->value; // AKV
+        $key = require_once 'auth.php';
+        $primary_key = $key; // AKV
     }
 
     $api_endpoint = 'https://' . $workspace_ID . '.ods.opinsights.azure.com/api/logs?api-version=2016-04-01';
