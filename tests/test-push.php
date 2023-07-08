@@ -49,7 +49,7 @@ function test_push() {
     function generateAuthorizationHeaderTester($workspace_ID, $sharedKey, $date, $contentLength) {
         $stringToSign = "POST\n" . $contentLength . "\napplication/json\nx-ms-date:" . $date . "\n/api/logs";
         $stringToSign = mb_convert_encoding($stringToSign, 'UTF-8');
-        $sharedKeyBytes = base64_encode($sharedKey);
+        $sharedKeyBytes = base64_decode($sharedKey);
         $signature = hash_hmac('sha256', $stringToSign, $sharedKeyBytes, true);
         $encodedSignature = base64_encode($signature);
         $authorizationHeader = "SharedKey " . $workspace_ID . ":" . $encodedSignature;
