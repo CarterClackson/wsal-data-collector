@@ -71,9 +71,16 @@ function wp_event_data_collector_register_settings() {
         'wp_event_data_collector_identity'
     );
     add_settings_field(
-        'wp_event_data_collector_azure_key_name',
-        'Azure Secret Name',
-        'wp_event_data_collector_azure_key_name_callback',
+        'wp_event_data_collector_azure_variable_dropdown',
+        'Do you want to pull a secret or a key out of the vault?',
+        'wp_event_data_collector_variable_dropdown_field_callback',
+        'wp_event_data_collector_settings_identity',
+        'wp_event_data_collector_identity'
+    );
+    add_settings_field(
+        'wp_event_data_collector_azure_variable_name',
+        'Azure Variable Name',
+        'wp_event_data_collector_azure_variable_name_callback',
         'wp_event_data_collector_settings_identity',
         'wp_event_data_collector_identity'
     );
@@ -99,7 +106,8 @@ function wp_event_data_collector_register_settings() {
     register_setting('wp_event_data_collector_options', 'wp_event_data_collector_azure_client_secret');
     register_setting('wp_event_data_collector_options', 'wp_event_data_collector_azure_tenant_id');
     register_setting('wp_event_data_collector_options', 'wp_event_data_collector_azure_vault_url');
-    register_setting('wp_event_data_collector_options', 'wp_event_data_collector_azure_key_name');
+    register_setting('wp_event_data_collector_options', 'wp_event_data_collector_azure_variable_dropdown');
+    register_setting('wp_event_data_collector_options', 'wp_event_data_collector_azure_variable_name');
     register_setting('wp_event_data_collector_options', 'wp_event_data_collector_email');
 }
 add_action('admin_init', 'wp_event_data_collector_register_settings');
@@ -188,12 +196,22 @@ function wp_event_data_collector_azure_vault_url_callback() {
     }
 }
 // Call back for Tenant ID Field
-function wp_event_data_collector_azure_key_name_callback() {
+function wp_event_data_collector_azure_variable_name_callback() {
     $option = get_option('wp_event_data_collector_identity_dropdown');
-    $azure_key_name = decrypt_options(get_option('wp_event_data_collector_azure_key_name'));
+    $azure_variable_name = decrypt_options(get_option('wp_event_data_collector_azure_variable_name'));
     if ($option === 'akv') {
-        echo '<input type="text" name="wp_event_data_collector_azure_key_name" value="' . esc_attr($azure_key_name) . '" class="wp-event-collector-identity-fields" />';
+        echo '<input type="text" name="wp_event_data_collector_azure_variable_name" value="' . esc_attr($azure_variable_name) . '" class="wp-event-collector-identity-fields" />';
     } else {
-        echo '<input type="text" name="wp_event_data_collector_azure_key_name" value="' . esc_attr($azure_key_name) . '" class="wp-event-collector-identity-fields" />';
+        echo '<input type="text" name="wp_event_data_collector_azure_variable_name" value="' . esc_attr($azure_variable_name) . '" class="wp-event-collector-identity-fields" />';
     }
+}
+//Call back for Select Field
+function wp_event_data_collector_variable_dropdown_field_callback() {
+    $variable_option = get_option('wp_event_data_collector_azure_variable_dropdown');
+  ?>
+  <select name="wp_event_data_collector_azure_variable_dropdown">
+    <option value="key" <?php selected($variable_option, 'key'); ?>>Key</option>
+    <option value="secret" <?php selected($variable_option, 'secret'); ?>>Secret</option>
+  </select>
+  <?php
 }

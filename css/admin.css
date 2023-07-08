@@ -24,10 +24,11 @@
 #general-settings span, #identity-settings span, #notification-settings span {
     padding-bottom: 10px;
 }
-#general-test, #akv-test, #notification-test {
+#general-test, #akv-test, #notification-test, #akv-push {
     margin-top: 10px !important;
 }
 
+/** Backend Success Messaging **/
 .last-success {
     font-size: 1.15em;
     font-weight: bold;
@@ -37,4 +38,9 @@
 }
 .last-success .green {
     color: green;
+}
+
+/** Responses **/
+.response {
+    margin-top: 10px;
 }

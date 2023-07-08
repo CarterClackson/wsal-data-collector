@@ -33,7 +33,9 @@ function wp_event_data_collector_render_settings_page() {
             ?>
             <span>Please ensure you have your Workspace ID, Primary Key, and Table Name filled out above and you have saved or the test will fail.<br></span>
             <input type="button" id="general-test" class="button" value="Test Connection to API">
-            <div id="general-response"></div>
+            <div class="response">
+                <div id="general-response"></div>
+            </div>
         </div>
         <div id="identity-settings">
             <?php
@@ -41,8 +43,11 @@ function wp_event_data_collector_render_settings_page() {
             ?>
             <span>Please ensure you have your Workspace ID, Table Name, and all of the fields below "Azure Key Vault Settings" filled out above and you have saved or the test will fail.<br></span>
             <input type="button" id="akv-test" class="button" value="Test Key Vault Connection">
-            <input type="button" style="margin-left: 15px;" id="general-test" class="button" value="Test Connection to API">
-            <div id="akv-response"></div>
+            <input type="button" style="margin-left: 15px;" id="akv-push" class="button" value="Test Get from Key Vault">
+            <div class="response">
+                <div id="akv-response"></div>
+                <div id="akv-push-response"></div>
+            </div>
         </div>
         <div id="notification-settings">
             <?php
@@ -50,7 +55,9 @@ function wp_event_data_collector_render_settings_page() {
             ?>
             <span>If you don't set an email above and save the test will use your Admin email.<br></span>
             <input type="button" id="notification-test" class="button" value="Test Notifications">
-            <div id="notification-response"></div>
+            <div class="response">
+                <div id="notification-response"></div>
+            </div>
         </div>
         <?php submit_button('Save Settings'); ?>
     </form>

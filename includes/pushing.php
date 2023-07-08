@@ -59,7 +59,7 @@ function push_file_data_to_api() {
         'Log-Type: ' . $table_name,
         'x-ms-date: ' . $date,
         'time-generated-field: date',
-        'Authorization: ' . generateAuthorizationHeader($workspace_ID, $primary_key, $date, $auth_path, strlen($jsonPayload)),
+        'Authorization: ' . generateAuthorizationHeader($workspace_ID, $primary_key, $date, strlen($jsonPayload)),
     ];
 
     //Init cURL

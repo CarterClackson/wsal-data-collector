@@ -33,13 +33,13 @@ function generate_and_store_keys() {
         return;
     }
 
-    // Find the position of the insertion point
-    $insertion_point = "/* That's all, stop editing! Happy publishing. */";
-    $insertion_position = strpos($config_content, $insertion_point);
+    // Find the position of the opening PHP tag
+    $opening_php = strpos($config_content, '<?php');
+    $insertion_position = $opening_php + strlen('<?php');
 
     // If the insertion point exists, insert the new code before it
     if ($insertion_position !== false) {
-        $new_config_content = substr_replace($config_content, $key_code . "\n" . $iv_code . "\n", $insertion_position, 0);
+        $new_config_content = substr_replace($config_content, "\n" . $key_code . "\n" . $iv_code . "\n", $insertion_position, 0);
 
         // Write the updated content to the wp-config.php file
         file_put_contents($wp_config_path, $new_config_content);

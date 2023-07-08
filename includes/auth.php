@@ -6,6 +6,7 @@ require_once 'encryption.php';
 $keyVaultURL = decrypt_options(get_option('wp_event_data_collector_azure_vault_url'));
 $tenantID = decrypt_options(get_option('wp_event_data_collector_azure_tenant_id'));
 $accessTokenEndpoint = 'https://login.microsoftonline.com/' . $tenantID . '/oauth2/token';
+$variable_option = get_option('wp_event_data_collector_azure_variable_dropdown');
 
 // AAD Auth Paramaters
 $clientID = decrypt_options(get_option('wp_event_data_collector_azure_client_id'));
@@ -13,7 +14,14 @@ $clientSecret = decrypt_options(get_option('wp_event_data_collector_azure_client
 $resource = 'https://vault.azure.net';
 
 // Key Name
-$keyName = decrypt_options(get_option('wp_event_data_collector_azure_key_name'));
+$keyName = decrypt_options(get_option('wp_event_data_collector_azure_variable_name'));
+
+$variable_switch = '';
+if ($variable_option == 'key') {
+    $variable_switch = '/keys/';
+} else {
+    $variable_switch = '/secrets/';
+}
 
 //Request access token from AAD
 $data = array(
@@ -47,7 +55,7 @@ if ($option == 'akv' && $clientID != NULL && $clientSecret != NULL && $keyName !
 
 
     // Retrieve key from AKV
-    $url = $keyVaultURL . '/secrets/' . $keyName . '?api-version=7.2';
+    $url = $keyVaultURL . $variable_switch . $keyName . '?api-version=7.2';
 
     $headers = array(
         'Authorization: Bearer ' . $accessToken,

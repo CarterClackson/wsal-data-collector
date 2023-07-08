@@ -85,6 +85,62 @@ jQuery(document).ready(function($) {
         });
       });
 
+      $('#akv-test').click(function() {
+        // Call an AJAX function to execute the PHP function on button click
+        $.ajax({
+          url: ajaxurl, // WordPress AJAX handler
+          type: 'POST',
+          data: {
+            action: 'test_vault_connection', // The WordPress AJAX action
+          },
+          success: function(response) {
+            // Handle the response from the server
+            if (response.status === 'success') {
+                // Data transfer successful
+                console.log(response.message);
+                $('#akv-response').html(response.message);
+              } else if (response.status === 'error') {
+                // Failed to send data
+                console.error(response.message);
+                $('#akv-response').html(response.message);
+              }
+          },
+          error: function(xhr, status, error) {
+            // Handle AJAX errors
+            $('#akv-response').html(error);
+            console.error(error);
+          }
+        });
+      });
+
+      $('#akv-push').click(function() {
+        // Call an AJAX function to execute the PHP function on button click
+        $.ajax({
+          url: ajaxurl, // WordPress AJAX handler
+          type: 'POST',
+          data: {
+            action: 'test_vault_connection_push', // The WordPress AJAX action
+          },
+          success: function(response) {
+            // Handle the response from the server
+            if (response.status === 'success') {
+                // Data transfer successful
+                console.log(response.message);
+                $('#akv-push-response').html(response.message);
+              } else if (response.status === 'error') {
+                // Failed to send data
+                console.error(response.message);
+                $('#akv-push-response').html(response.message);
+              }
+          },
+          error: function(xhr, status, error) {
+            // Handle AJAX errors
+            $('#akv-push-response').html(error);
+            console.error(error);
+          }
+        });
+      });
+
 });
 
 function obfuscate(value) {

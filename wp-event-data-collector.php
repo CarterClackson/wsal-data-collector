@@ -14,6 +14,7 @@ require_once plugin_dir_path(__FILE__) . 'includes/pushing.php';
 require_once plugin_dir_path(__FILE__) . 'includes/encryption.php';
 require_once plugin_dir_path(__FILE__) . 'tests/test-push.php';
 require_once plugin_dir_path(__FILE__) . 'tests/test-notification.php';
+require_once plugin_dir_path(__FILE__) . 'tests/test-auth.php';
 
 register_activation_hook(__FILE__, 'wp_event_data_collector_activate');
 register_deactivation_hook(__FILE__, 'wp_event_data_collector_deactivate');
@@ -86,7 +87,7 @@ add_filter('pre_update_option_wp_event_data_collector_azure_client_id', 'encrypt
 add_filter('pre_update_option_wp_event_data_collector_azure_client_secret', 'encrypt_options', 10, 3);
 add_filter('pre_update_option_wp_event_data_collector_azure_tenant_id', 'encrypt_options', 10, 3);
 add_filter('pre_update_option_wp_event_data_collector_azure_vault_url', 'encrypt_options', 10, 3);
-add_filter('pre_update_option_wp_event_data_collector_azure_key_name', 'encrypt_options', 10, 3);
+add_filter('pre_update_option_wp_event_data_collector_azure_variable_name', 'encrypt_options', 10, 3);
 
 // Filters for decrypting options before use
 add_filter('pre_get_option_wp_event_data_collector_primary_key', 'decrypt_options');
@@ -97,4 +98,4 @@ add_filter('pre_get_option_wp_event_data_collector_azure_client_id', 'decrypt_op
 add_filter('pre_get_option_wp_event_data_collector_azure_client_secret', 'decrypt_options');
 add_filter('pre_get_option_wp_event_data_collector_azure_tenant_id', 'decrypt_options');
 add_filter('pre_get_option_wp_event_data_collector_azure_vault_url', 'decrypt_options');
-add_filter('pre_get_option_wp_event_data_collector_azure_key_name', 'decrypt_options');
+add_filter('pre_get_option_wp_event_data_collector_azure_variable_name', 'decrypt_options');

@@ -1,6 +1,7 @@
 <?php
 require_once WP_CONTENT_DIR . '/plugins/WSAL-Data-Collector/includes/pushing.php';
 
+
 $option = get_option('wp_event_data_collector_identity_dropdown');
 
 if ($option == 'akv') {
@@ -9,7 +10,7 @@ if ($option == 'akv') {
 
 //Push data to MS Data Collector API
 function test_push() {
-
+    $auth_path = WP_CONTENT_DIR . '/auth_log.txt';
     //File path where data lives
     $test_data = '{
         "PluginFile": "\/var\/www\/html\/wp-content\/plugins\/WSAL-Data-Collector\/wp-event-data-collector.php",
@@ -38,11 +39,7 @@ function test_push() {
     $option = get_option('wp_event_data_collector_identity_dropdown');
     $table_name = decrypt_options(get_option('wp_event_data_collector_table_name'));
 
-    if ($option == 'hardcode') {
-        $primary_key = decrypt_options(get_option('wp_event_data_collector_primary_key')); //Stored value
-    } else {
-        $primary_key = $key->value; // AKV
-    }
+    $primary_key = decrypt_options(get_option('wp_event_data_collector_primary_key')); //Stored value
 
     $api_endpoint = 'https://' . $workspace_ID . '.ods.opinsights.azure.com/api/logs?api-version=2016-04-01';
 
@@ -71,6 +68,7 @@ function test_push() {
         'Authorization: ' . generateAuthorizationHeaderTester($workspace_ID, $primary_key, $date, strlen($jsonPayload)),
     ];
 
+
     //Init cURL
     $ch = curl_init();
 
@@ -91,11 +89,19 @@ function test_push() {
             'message' => $success_message
         );
     } else {
-        $error_message = 'Failed to send data. Status code: ' . $httpCode . '. Message: ' . $response;
-        $response = array(
-            'status' => 'error',
-            'message' => $error_message
-        );
+        if ($httpCode == 0) {
+            $error_message = 'Failed to send data with Code 0. Unable to connect to API. Please check your config above.';
+            $response = array(
+                'status' => 'error',
+                'message' => $error_message
+            );
+        } else {
+            $error_message = 'Failed to send data. Status code: ' . $httpCode . '. Message: ' . $response;
+            $response = array(
+                'status' => 'error',
+                'message' => $error_message
+            );
+        }
     }
     curl_close($ch);
     wp_send_json($response);
