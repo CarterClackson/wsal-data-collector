@@ -4,7 +4,10 @@ Plugin Name: WSAL Data Collector API Integration
 Description: This plugin consumes logged events out of the WP Activity Log plugin and pushes them to Microsoft's Data Collector API to use in Log Analytics Workspace/Azure Sentinel
 Author: Carter Clackson
 AuthorURI: https://carterclackson.ca
-Version: 1.0.0
+License: Proprietary
+Requires at least: 5.0
+Tested up to: 6.2.2
+Version: 1.1.0
 */
 
 require_once plugin_dir_path(__FILE__) . 'includes/admin.php';

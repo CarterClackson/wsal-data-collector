@@ -34,7 +34,7 @@ Please ensure that your code follows the WordPress coding standards and includes
 
 ## License
 
-This project is licensed under the [MIT License](LICENSE). Feel free to use, modify, and distribute this plugin as per the terms of the license.
+This project is licensed under a proprietary license. 
 
 ## Acknowledgments
 
@@ -44,7 +44,7 @@ This plugin makes use of the following third-party libraries and resources:
 
 ## Support
 
-If you encounter any issues, have questions, or need assistance, you can reach out to us through the [issue tracker](https://github.com/your-username/your-plugin/issues) for this project.
+If you encounter any issues, have questions, or need assistance, you can reach out to us through the [issue tracker](https://github.com/your-username/your-plugin/issues) for this project or email clacksoncarter@gmail.com.
 
 ## Roadmap
 
@@ -52,6 +52,9 @@ We have the following features planned for future releases:
 
 - Support for custom log filters and exclusions.
 - Enhanced error handling and logging.
+- Support for multiple custom emails
+- Support for other notification streams like Teams or Slack
+- Enhanced backend UI and plugin specific page instead of just settings.
 
 Stay tuned for updates!
 
@@ -60,3 +63,10 @@ Stay tuned for updates!
 ### 1.0.0
 
 - Initial release of the WP Security Audit Log to Microsoft Data Collector API Connector.
+
+### 1.1.0
+
+- Added tests for user to check connections to Azure Auth, Azure Key Vault, and Data Collector API.
+- Added tests for user for custom email notifications.
+- Added confirmation of last successful push to UI.
+- Improved logic and error messaging for failed pushes to API.
