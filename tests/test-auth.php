@@ -1,6 +1,6 @@
 <?php
 
-require_once WP_CONTENT_DIR . '/plugins/WSAL-Data-Collector/includes/encryption.php';
+require_once WP_CONTENT_DIR . '/plugins/wsal-data-collector/includes/encryption.php';
 
 
 add_action('wp_ajax_test_vault_connection', 'test_vault_connection');
@@ -53,7 +53,6 @@ function test_vault_connection() {
     $ch = curl_init();
     curl_setopt_array($ch, $options);
     $response = curl_exec($ch);
-    file_put_contents($auth_path, $response);
     $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
     if ($httpCode == 200) {
         $success_message = 'Test Key Vault Connection was successful.';

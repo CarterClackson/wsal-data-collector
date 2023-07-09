@@ -74,7 +74,6 @@ function push_file_data_to_api() {
 
     if ($httpCode == 200) {
         echo 'Data transfer successful.';
-        file_put_contents($error_path, 'Data sent successfully!');
         file_put_contents($file_path, '[]'); // Only dump the file if transfer was success.
         update_option('email_sent_flag', false);
         update_option('wp_event_collector_last_success', current_time('mysql') . ' UTC' . wp_timezone_string());

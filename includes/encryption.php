@@ -55,7 +55,7 @@ function remove_keys_and_iv() {
     // Read the existing wp-config.php file content
     $config_content = file_get_contents($wp_config_path);
 
-    // Define the key and IV definitions with surrounding spaces
+    // Define the key and IV definitions
     $key_definition = "define( 'ENCRYPTION_KEY', '";
     $iv_definition = "define( 'ENCRYPTION_IV', '";
 
@@ -85,6 +85,9 @@ function remove_keys_and_iv() {
         // Write the updated content back to the wp-config.php file
         file_put_contents($wp_config_path, $config_content);
     }
+
+    // Update the option to indicate that key and IV are removed
+    update_option('encryption_key_iv_exists', false);
 }
 
 // Encryption

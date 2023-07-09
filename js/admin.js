@@ -1,10 +1,10 @@
 jQuery(document).ready(function($) {
     //Obfuscation
-    $('.obfuscated-input').each(function() {
+    /*$('.obfuscated-input').each(function() {
         var originalValue = $(this).val();
         var obfuscatedValue = obfuscate(originalValue);
         $(this).val(obfuscatedValue);
-    });
+    });*/
     $('.obfuscated-input').on('copy', function(event) {
         event.preventDefault();
     });

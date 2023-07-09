@@ -1,19 +1,18 @@
 <?php
-require_once WP_CONTENT_DIR . '/plugins/WSAL-Data-Collector/includes/pushing.php';
+require_once WP_CONTENT_DIR . '/plugins/wsal-data-collector/includes/pushing.php';
 
 
 $option = get_option('wp_event_data_collector_identity_dropdown');
 
 if ($option == 'akv') {
-    require_once WP_CONTENT_DIR . '/plugins/WSAL-Data-Collector/includes/auth.php';
+    require_once WP_CONTENT_DIR . '/plugins/wsal-data-collector/includes/auth.php';
 }
 
 //Push data to MS Data Collector API
 function test_push() {
-    $auth_path = WP_CONTENT_DIR . '/auth_log.txt';
     //File path where data lives
     $test_data = '{
-        "PluginFile": "\/var\/www\/html\/wp-content\/plugins\/WSAL-Data-Collector\/wp-event-data-collector.php",
+        "PluginFile": "\/var\/www\/html\/wp-content\/plugins\/wsal-data-collector\/wp-event-data-collector.php",
         "PluginData": {
             "Name": "Test Data",
             "PluginURI": "",

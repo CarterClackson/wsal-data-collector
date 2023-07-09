@@ -134,7 +134,7 @@ function wp_event_data_collector_workspace_id_field_callback() {
 //Call back for Primary Key Field
 function wp_event_data_collector_primary_key_field_callback() {
     $primary_key = decrypt_options(get_option('wp_event_data_collector_primary_key'));
-    echo '<input type="text" class="obfuscated-input" name="wp_event_data_collector_primary_key" value="' . esc_attr($primary_key) . '" />';
+    echo '<input type="password" class="obfuscated-input" name="wp_event_data_collector_primary_key" value="' . esc_attr($primary_key) . '" />';
 }
 //Call back for Table Name Field
 function wp_event_data_collector_table_name_field_callback() {
@@ -160,9 +160,9 @@ function wp_event_data_collector_azure_client_id_callback() {
     $option = get_option('wp_event_data_collector_identity_dropdown');
     $azure_client_id = decrypt_options(get_option('wp_event_data_collector_azure_client_id'));
     if ($option === 'akv') {
-        echo '<input type="text" name="wp_event_data_collector_azure_client_id" value="' . esc_attr($azure_client_id) . '" class="wp-event-collector-identity-fields obfuscated-input" />';
+        echo '<input type="password" name="wp_event_data_collector_azure_client_id" value="' . esc_attr($azure_client_id) . '" class="wp-event-collector-identity-fields obfuscated-input" />';
     } else {
-        echo '<input type="text" name="wp_event_data_collector_azure_client_id" value="' . esc_attr($azure_client_id) . '" class="wp-event-collector-identity-fields obfuscated-input" />';
+        echo '<input type="password" name="wp_event_data_collector_azure_client_id" value="' . esc_attr($azure_client_id) . '" class="wp-event-collector-identity-fields obfuscated-input" />';
     }
 }
 // Call back for Client Secret Field
@@ -170,9 +170,9 @@ function wp_event_data_collector_azure_client_secret_callback() {
     $option = get_option('wp_event_data_collector_identity_dropdown');
     $azure_client_secret = decrypt_options(get_option('wp_event_data_collector_azure_client_secret'));
     if ($option === 'akv') {
-        echo '<input type="text" name="wp_event_data_collector_azure_client_secret" value="' . esc_attr($azure_client_secret) . '" class="wp-event-collector-identity-fields obfuscated-input" />';
+        echo '<input type="password" name="wp_event_data_collector_azure_client_secret" value="' . esc_attr($azure_client_secret) . '" class="wp-event-collector-identity-fields obfuscated-input" />';
     } else {
-        echo '<input type="text" name="wp_event_data_collector_azure_client_secret" value="' . esc_attr($azure_client_secret) . '" class="wp-event-collector-identity-fields obfuscated-input" />';
+        echo '<input type="password" name="wp_event_data_collector_azure_client_secret" value="' . esc_attr($azure_client_secret) . '" class="wp-event-collector-identity-fields obfuscated-input" />';
     }
 }
 // Call back for Tenant ID Field
@@ -180,9 +180,9 @@ function wp_event_data_collector_azure_tenant_id_callback() {
     $option = get_option('wp_event_data_collector_identity_dropdown');
     $azure_tenant_id = decrypt_options(get_option('wp_event_data_collector_azure_tenant_id'));
     if ($option === 'akv') {
-        echo '<input type="text" name="wp_event_data_collector_azure_tenant_id" value="' . esc_attr($azure_tenant_id) . '" class="wp-event-collector-identity-fields obfuscated-input" />';
+        echo '<input type="password" name="wp_event_data_collector_azure_tenant_id" value="' . esc_attr($azure_tenant_id) . '" class="wp-event-collector-identity-fields obfuscated-input" />';
     } else {
-        echo '<input type="text" name="wp_event_data_collector_azure_tenant_id" value="' . esc_attr($azure_tenant_id) . '" class="wp-event-collector-identity-fields obfuscated-input" />';
+        echo '<input type="password" name="wp_event_data_collector_azure_tenant_id" value="' . esc_attr($azure_tenant_id) . '" class="wp-event-collector-identity-fields obfuscated-input" />';
     }
 }
 // Call back for Vault URL Field
