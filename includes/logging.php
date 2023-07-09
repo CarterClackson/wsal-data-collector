@@ -11,7 +11,17 @@ function log_event_data_to_file($event_data) {
     }
 
     // Append new data to file
-    $file_data[] = $event_data;
+    $data = $event_data;
+    $timestamp = $data['Timestamp'];
+    $dateTime = DateTime::createFromFormat('U.u', $timestamp);
+    $dateTime->setTimezone(new DateTimeZone('UTC'));
+    $iso8601 = $dateTime->format('Y-m-d\TH:i:s\Z');
+
+    $data['date'] = $iso8601;
+
+    $modifiedJson = $data;
+
+    $file_data[] = $modifiedJson;
     file_put_contents($file_path, json_encode($file_data));
 
     return $event_data;

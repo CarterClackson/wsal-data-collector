@@ -1,3 +1,46 @@
 .wp-event-collector-identity-fields {
     display: block;
 }
+
+.obfuscated-input {
+    background-color: #f5f5f5;
+    color: #888888;
+    font-style: italic;
+}
+#general-settings, #identity-settings, #notification-settings {
+    margin-top: 30px;
+}
+#general-settings tbody, #identity-settings tbody, #notification-settings tbody {
+}
+#general-settings tr, #identity-settings tr, #notification-settings tr {
+    padding: 0px 10px 0px 0px;
+}
+#general-settings td, #identity-settings td, #notification-settings td {
+    padding: 5px 10px;
+}
+#general-settings th, #identity-settings th, #notification-settings th {
+    padding: 10px 10px 10px 0px;
+}
+#general-settings span, #identity-settings span, #notification-settings span {
+    padding-bottom: 10px;
+}
+#general-test, #akv-test, #notification-test, #akv-push {
+    margin-top: 10px !important;
+}
+
+/** Backend Success Messaging **/
+.last-success {
+    font-size: 1.15em;
+    font-weight: bold;
+}
+.last-success .red {
+    color: red;
+}
+.last-success .green {
+    color: green;
+}
+
+/** Responses **/
+.response {
+    margin-top: 10px;
+}

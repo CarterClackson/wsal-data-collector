@@ -1,0 +1,15 @@
+License Text:
+This plugin is licensed under a proprietary license. By purchasing or using this plugin, you agree to the following terms and conditions:
+
+1. You are granted a non-exclusive, non-transferable license to use this plugin on a single WordPress installation.
+
+2. You may not distribute, resell, sublicense, or redistribute this plugin in any form, modified or unmodified, without prior written permission from the author.
+
+3. You may not modify or reverse engineer the plugin's source code without prior written permission from the author.
+
+4. Support and updates for this plugin are provided for a limited period as specified in the purchase agreement or license.
+
+5. The author reserves the right to revoke or terminate this license at any time without prior notice if the terms and conditions are violated.
+
+Disclaimer:
+This plugin is provided "as is" without warranty of any kind, express or implied. The author shall not be liable for any damages or liabilities arising from the use or misuse of this plugin.
