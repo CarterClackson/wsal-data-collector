@@ -32,7 +32,7 @@ function push_file_data_to_api() {
     $custom_email = trim(decrypt_options(get_option('wp_event_data_collector_email')));
     $primary_key = decrypt_options(get_option('wp_event_data_collector_primary_key'));
 
-    $api_endpoint = 'https://' . $workspace_ID . '.ods.opinsights.azure.com/api/logs?api-version=2016-04-01';
+    $api_endpoint = 'https://' . $workspace_ID . '.ods.opinsights.azure.com/OperationalData.svc/PostJsonDataItems';
 
     //Read existing file data
     $file_data = [];
@@ -41,9 +41,12 @@ function push_file_data_to_api() {
     }
 
     $payload = [];
-    //Iterate through each object to build payload
-    foreach($file_data as $object) {
-        $payload = $file_data;
+    foreach ($file_data as $object) {
+        $payload[] = [
+            "DataType" => "WP-Log",
+            "IPName" => "WSAL-Data-Collector",
+            "Data" => $object
+        ];
     }
     $jsonPayload = json_encode($payload);
 
@@ -53,9 +56,9 @@ function push_file_data_to_api() {
     // Build the headers
     $header = [
         'Content-Type: application/json',
-        'Log-Type: ' . $table_name,
+        //'Log-Type: ' . $table_name,
         'x-ms-date: ' . $date,
-        'time-generated-field: date',
+        //'time-generated-field: date',
         'Authorization: ' . generateAuthorizationHeader($workspace_ID, $primary_key, $date, strlen($jsonPayload)),
     ];
 

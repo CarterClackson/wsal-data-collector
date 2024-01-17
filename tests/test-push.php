@@ -40,9 +40,14 @@ function test_push() {
 
     $primary_key = decrypt_options(get_option('wp_event_data_collector_primary_key')); //Stored value
 
-    $api_endpoint = 'https://' . $workspace_ID . '.ods.opinsights.azure.com/api/logs?api-version=2016-04-01';
+    $api_endpoint = 'https://' . $workspace_ID . '.ods.opinsights.azure.com/OperationalData.svc/PostJsonDataItems';
 
-    $jsonPayload = $test_data;
+    $payload = [
+        "DataType" => "WP-Log",
+        "IPName" => "WSAL-Data-Collector",
+         "Data" => $test_data
+    ];
+    $jsonPayload = $payload;
 
     //Generate shared key auth signature
     function generateAuthorizationHeaderTester($workspace_ID, $sharedKey, $date, $contentLength) {
@@ -61,9 +66,9 @@ function test_push() {
     // Build the headers
     $header = [
         'Content-Type: application/json',
-        'Log-Type: ' . $table_name,
+        //'Log-Type: ' . $table_name,
         'x-ms-date: ' . $date,
-        'time-generated-field: date',
+        //'time-generated-field: date',
         'Authorization: ' . generateAuthorizationHeaderTester($workspace_ID, $primary_key, $date, strlen($jsonPayload)),
     ];
 
